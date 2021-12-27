@@ -545,14 +545,13 @@ class Darknet(nn.Module):
             img_size = x.shape[-2:]  # height, width
             isize = img_size[0]
             s = [0.83, 0.67]  # scales
-            
             # ensure final output is multiple of 128
-            s = [int(j * isize / 128) * 128 / isize for j in s] 
+            # s = [int(j * isize / 128) * 128 / isize for j in s] 
             
             y = []
             for i, xi in enumerate((x,
-                                    torch_utils.scale_img(x.flip(3), s[0], same_shape=False),  # flip-lr and scale
-                                    torch_utils.scale_img(x, s[1], same_shape=False),  # scale
+                                    torch_utils.scale_img(x.flip(3), s[0], same_shape=True),  # flip-lr and scale
+                                    torch_utils.scale_img(x, s[1], same_shape=True),  # scale
                                     )):
                 # cv2.imwrite('img%g.jpg' % i, 255 * xi[0].numpy().transpose((1, 2, 0))[:, :, ::-1])
                 y.append(self.forward_once(xi)[0])
