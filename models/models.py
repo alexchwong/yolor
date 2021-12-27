@@ -546,8 +546,8 @@ class Darknet(nn.Module):
             isize = img_size[0]
             s = [0.83, 0.67]  # scales
             
-            # ensure final output is multiple of 64
-            s = [int(j * isize / 64) * 64 / isize for j in s] 
+            # ensure final output is multiple of 128
+            s = [int(j * isize / 128) * 128 / isize for j in s] 
             
             y = []
             for i, xi in enumerate((x,
