@@ -543,7 +543,12 @@ class Darknet(nn.Module):
             return self.forward_once(x)
         else:  # Augment images (inference and test only) https://github.com/ultralytics/yolov3/issues/931
             img_size = x.shape[-2:]  # height, width
+            isize = img_size[0]
             s = [0.83, 0.67]  # scales
+            
+            # ensure final output is multiple of 64
+            s = [int(j * isize / 64) * 64 / isize for j in s] 
+            
             y = []
             for i, xi in enumerate((x,
                                     torch_utils.scale_img(x.flip(3), s[0], same_shape=False),  # flip-lr and scale
